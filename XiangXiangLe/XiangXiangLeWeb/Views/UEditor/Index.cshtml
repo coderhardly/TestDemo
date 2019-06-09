@@ -1,0 +1,45 @@
+﻿
+@{
+    Layout = null;
+}
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<div class="row">
+    @ViewBag.ID
+</div>
+<div class="row">
+    <div class="col-md-10" style="height:200px">
+        @using (Html.BeginForm("Index", "UEditor", new { pid = ViewBag.ID }, FormMethod.Post, null))
+        {
+            <textarea id="editor" name="editor"></textarea>
+            if (Session["userId"] == null)
+            {
+                <input id="remarkLogin" type="button" value="提交" style="float:right" />
+            }
+            else
+            {
+                <input type="submit" value="提交" class="btn-success btn-lg" style="float:right" />
+            }
+
+        }
+
+    </div>
+</div>
+<script src="~/Content/ueditor/ueditor.config.js"></script>
+<script src="~/Content/ueditor/ueditor.all.min.js"></script>
+<script src="~/Scripts/jquery.jqzoom.js"></script>
+<link href="~/Content/ueditor/themes/iframe.css" rel="stylesheet" />
+<script src="~/Scripts/use_jqzoom.js"></script>
+<script src="~/Content/ueditor/lang/zh-cn/zh-cn.js"></script>
+<script type="text/javascript">
+    var editor = new baidu.editor.ui.Editor({
+        UEDITOR_HOME_URL: '/Content/ueditor/',//配置编辑器路径
+        iframeCssUrl: '/Content / ueditor / themes / iframe.css',//样式路径
+        initialContent: '',//初始化编辑器内容
+        autoHeightEnabled: false,//高度自动增长
+        minFrameHeight: 100,//最小高度
+        autoFloatEnabled: true,
+        initialFrameWidth: 1000,
+        initialFrameHeight: 100,
+    });
+    editor.render('editor');
+</script>

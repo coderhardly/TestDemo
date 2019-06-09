@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<objects xmlns="http://www.springframework.net">
+  <!--UserController-->
+  <object type="XiangXiangLeWeb.Controllers.UserController, XiangXiangLeWeb" singleton="false" >
+    <property name="userInfoBll" ref ="UserInfoService" />
+  </object>
+  <!--RegisterController-->
+  <object type="XiangXiangLeWeb.Controllers.RegisterController, XiangXiangLeWeb" singleton="false" >
+    <property name="userbll" ref ="UserInfoService" />
+  </object>
+  <!--CartsController-->
+  <object type="XiangXiangLeWeb.Controllers.CartsController, XiangXiangLeWeb" singleton="false" >
+    <property name="userBll" ref ="UserInfoService" />
+    <property name="productBll" ref ="ProductService" />
+    <property name="CartsBll" ref ="CartsService" />
+  </object>
+  <!--FavoriteController-->
+  <object type="XiangXiangLeWeb.Controllers.FavoriteController, XiangXiangLeWeb" singleton="false" >
+    <property name="favoriteBll" ref ="FavoriteService" />
+  </object>
+  <!--HomeController-->
+  <object type="XiangXiangLeWeb.Controllers.HomeController, XiangXiangLeWeb" singleton="false" >
+    <property name="productBll" ref ="ProductService" />
+  </object>
+  <!--OrdersController-->
+  <object type="XiangXiangLeWeb.Controllers.OrdersController, XiangXiangLeWeb" singleton="false" >
+    <property name="ordersBll" ref ="OrderstService" />
+    <property name="orderDetailBll" ref ="OrderDetailService" />
+    <property name="cartsBll" ref ="CartsService" />
+  </object>
+  <!--ProductController-->
+  <object type="XiangXiangLeWeb.Controllers.ProductController, XiangXiangLeWeb" singleton="false" >
+    <property name="ProductBll" ref ="ProductService" />
+    <property name="remarkBll" ref ="RemarkService" />
+    <property name="cartsBll" ref ="CartsService" />
+    <property name="userInfoBll" ref ="UserInfoService" />
+    <property name="favoriteBll" ref ="FavoriteService" />
+  </object>
+  <!--UEditorController-->
+  <object type="XiangXiangLeWeb.Controllers.UEditorController, XiangXiangLeWeb" singleton="false" >
+    <property name="remarkBll" ref ="RemarkService" />
+    <property name="userInfoBll" ref ="UserInfoService" />
+   
+  </object>
+  
+
+</objects>

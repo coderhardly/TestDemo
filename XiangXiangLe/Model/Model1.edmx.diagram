@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="159a77d106a64511ab4b6ac9a9765e7d" Name="Diagram1">
+        <EntityTypeShape EntityType="CountrySideHappyModel.Carts" Width="1.5" PointX="5.25" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CountrySideHappyModel.Categories" Width="1.5" PointX="0.75" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CountrySideHappyModel.MyFavorite" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CountrySideHappyModel.OrderDetail" Width="1.5" PointX="8.25" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CountrySideHappyModel.Orders" Width="1.5" PointX="6" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CountrySideHappyModel.Praise" Width="1.5" PointX="7.5" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CountrySideHappyModel.Products" Width="1.5" PointX="3" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CountrySideHappyModel.Remark" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CountrySideHappyModel.Users" Width="1.5" PointX="3" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CountrySideHappyModel.Message" Width="1.5" PointX="8.75" PointY="8.25" IsExpanded="true" />
+        <AssociationConnector Association="CountrySideHappyModel.FK__Carts__pId__1A14E395" ManuallyRouted="false" />
+        <AssociationConnector Association="CountrySideHappyModel.FK__Products__pcateg__173876EA" ManuallyRouted="false" />
+        <AssociationConnector Association="CountrySideHappyModel.FK__OrderDeta__order__4AB81AF0" ManuallyRouted="false" />
+        <AssociationConnector Association="CountrySideHappyModel.FK__OrderDetail__Pid__49C3F6B7" ManuallyRouted="false" />
+        <AssociationConnector Association="CountrySideHappyModel.FK__Orders__userId__1ED998B2" ManuallyRouted="false" />
+        <AssociationConnector Association="CountrySideHappyModel.FK__Praise__RemarkId__5EBF139D" ManuallyRouted="false" />
+        <AssociationConnector Association="CountrySideHappyModel.FK__Praise__UserId__5DCAEF64" ManuallyRouted="false" />
+        <AssociationConnector Association="CountrySideHappyModel.FK_PRODUCT" ManuallyRouted="false" />
+        <AssociationConnector Association="CountrySideHappyModel.FK__Remark__userId1__22AA2996" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

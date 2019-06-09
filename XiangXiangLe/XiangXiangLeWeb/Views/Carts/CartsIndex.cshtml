@@ -1,0 +1,226 @@
+﻿@model IEnumerable<Model.ViewModel.CartsView>
+@{
+
+    Layout = "~/Views/Shared/Layout1.cshtml";
+
+}
+<form action="/Carts/CreateOrder" >
+    <input id="emptyCarts" type="button" value="清空购物车" class="btn-success" />
+    <table class="table">
+        <thead>
+            <tr>
+                <th> <input type="checkbox" id="chall" />全选</th>
+                <th>商品图片</th>
+                <th>商品名称</th>
+                <th>数量</th>
+                <th>小计</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var m in Model)
+            {
+                <tr class="distr">
+                    <td class="checkbox">
+                        <input type="checkbox" class="chitem">
+                        <input class="pId" type="hidden" value="@m.ProductId" />
+                    </td>
+                    <td> <img src="~/Content/ProductImages/@m.PUrl" style="width:50px;height:50px;" /></td>
+                    <td>@m.Pname</td>
+
+                    <td class="pnum">
+                        <input class="min" name="" type="button" value="-">
+                        <input class="num" name="num" type="text" value=@m.Pcount readonly="readonly" style="width:20px;" onchange="setTotal();">
+                        <input class="add" name="" type="button" value="+">
+                        <input class="pId" type="hidden" value="@m.ProductId" />
+                        <input class="singlePrice" type="hidden" value="@m.Price" />
+                    </td>
+
+                    @{ var price = m.Price;
+                        var count = m.Pcount;
+                        var total = price * count;
+                        <td class="price">@total</td>}
+                        <td>
+                            @Ajax.ActionLink("删除", "DeleteProduct", new { pId = m.ProductId }, new AjaxOptions { HttpMethod = "Post" })
+                        </td>
+                    </tr>}
+        </tbody>
+    </table>
+    <p style="color:red;font-size:large">总计<span id="totalPrice"></span>￥</p>
+    <input type="submit" id="submitForm" value="去结算" class="btn-group-lg btn-success" style="float:right;margin-right:30px;" />
+</form>
+@*<script src="~/Scripts/jquery-3.3.1.min.js"></script>*@
+<script src="~/Scripts/jquery-1.7.min.js"></script>
+<script src="~/Scripts/jquery.cookie.js"></script>
+<script src="~/Scripts/jquery.jsoncookie.js"></script>
+<script type="text/javascript">
+
+    $(function () {
+
+        //更新数量
+        var addnum = $(".add");
+        var deletenum = $(".min");
+        var num = $(".num");
+        var selectAll = $("#chall");
+        console.log(selectAll);
+        var chInputs = $(".chitem");
+        console.log(chInputs);
+        // SetTotal();
+        chInputs.click(function () {
+            
+            SetTotal();
+            boolAllSelect();
+        })
+
+        selectAll.click(function () {
+            if ($(this).is(':checked')) {
+                chInputs.each(function () {
+                    $(this).prop("checked", true);
+                    SetTotal();
+                });
+            } else {
+                chInputs.each(function () {
+                    $(this).prop("checked", false);
+                    SetTotal();
+                });
+            }
+        });
+        addnum.click(function () {
+            $(this).prev().val(parseInt($(this).prev().val()) + 1)
+            var pnum = $(this).prev().val();
+            var pid = $(this).next().val();
+            var singlePrice = $(this).next().next().val();
+            var ptotal = parseInt(singlePrice * pnum);
+            $(this).parent(".pnum").next().html(ptotal);
+            SetTotal();
+            $.ajax({
+                url: "/Carts/UpdateCount",
+                type: "post",
+                data: { pNum: pnum, pId: pid },
+                success: function (data) {
+                    if (data.flag == true) {
+                        console.log("success");
+                    }
+                    else {
+                        alert("亲，因为未知的元素，程序出错");
+                    }
+                }
+            })
+        })
+        deletenum.click(function () {
+            var pnum = $(this).next().val();
+            if (pnum > 0) {
+                $(this).next().val(parseInt($(this).next().val()) - 1)
+
+            }
+            pnum = $(this).next().val();
+            var pid = $(this).next().next().next().val();
+            //alert(pid);
+            var singlePrice = $(this).next().next().next().next().val();
+            //alert(singlePrice);
+            var ptotal = parseInt(singlePrice * pnum);
+            //alert(ptotal);
+            $(this).parent(".pnum").next().html(ptotal);
+            SetTotal();
+            $.ajax({
+                url: "/Carts/UpdateCount",
+                type: "post",
+                data: { pNum: pnum, pId: pid },
+                success: function (data) {
+                    if (data.flag == true) {
+                        console.log("success");
+                    }
+                    else {
+                        alert("亲，因为未知的元素，程序出错");
+                    }
+                }
+            })
+        })
+        $("#emptyCarts").click(function () {
+            $.ajax({
+                url: "/Carts/EmptyCarts",
+                type: "post",
+                success: function (data) {
+                    if (data.flag == true) {
+                        $(".distr").css("display", "none");
+                        $("#totalPrice").text(0);
+                    }
+                    else {
+                        alert("亲，因为未知的元素，程序出错");
+                    }
+                }
+            })
+        })
+        $("form").submit(function () {
+            summitGoods();
+           // location.href = "/Carts/CreateOrder";
+
+        })
+    })
+
+    function SetTotal() {
+        var allTotalPrice = 0;
+        var chInputs = $(".chitem");
+        chInputs.each(function () {
+            if ($(this).is(':checked')) {
+
+                var subtotal = $(this).parent(".checkbox").nextAll().eq(3).text();
+                allTotalPrice = allTotalPrice + parseInt(subtotal);
+                $("#totalPrice").text(allTotalPrice);
+            }
+            else {
+                $("#totalPrice").text(0);
+
+            }
+        })
+
+    }
+    //判断是否全部选中
+    function boolAllSelect() {
+        var selctedCount = 0;//选中的数量
+        var chInputs = $(".chitem");
+        var selectAll = $("#chall");
+        chInputs.each(function () {
+            if ($(this).is(':checked')) {
+                selctedCount++
+            }
+        })
+        var totalnum = $(".distr").length
+        if (totalnum == selctedCount) {
+            selectAll.prop("checked", true);
+        }
+        else {
+            selectAll.prop("checked", false);
+        }
+    }
+    //把选中的商品存在cookie中，后台通过解析获取
+    function summitGoods() {
+       
+        var chInputs = $(".chitem");
+        var arr = [];
+        chInputs.each(function () {
+            if ($(this).is(":checked")) {
+                var cpId = $(this).next().val();
+                var cPurl = $(this).parent(".checkbox").nextAll().eq(0).find('img').attr("src");
+                var cpname = $(this).parent(".checkbox").nextAll().eq(1).text();
+                var cpcount = $(this).parent(".checkbox").nextAll().eq(2).find('input:nth(1)').val();
+                var cPrice = $(this).parent(".checkbox").nextAll().eq(2).find('input:nth(4)').val();
+                var cpSubtotal = $(this).parent(".checkbox").nextAll().eq(3).text();
+                arr.push({ Pname: cpname, Pcount: cpcount, Psubtotal: cpSubtotal, ProductId: cpId, PUrl: cPurl, Price: cPrice });
+            }
+
+        });
+        var str = JSON.stringify(arr);//把数组变成json字符串
+        setCookie_CN("myCookie", str, 1);
+      
+       
+    }
+   //写入中文cookie
+function setCookie_CN(key, value, t) {
+    var oDate = new Date();
+    oDate.setDate(oDate.getDate() + t);
+    document.cookie = key + '=' + escape(value) + ';expires=' + oDate.toGMTString();
+} 
+
+
+</script>

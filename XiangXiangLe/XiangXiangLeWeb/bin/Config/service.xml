@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<objects xmlns="http://www.springframework.net">
+
+  <object name="UserInfoService" type="Bll.UserInfoService, Bll" singleton="false" >
+  </object>
+  <object name="ProductService" type="Bll.ProductBll, Bll" singleton="false" >
+  </object>
+  <object name="CartsService" type="Bll.CartsBll, Bll" singleton="false" >
+  </object>
+  <object name="FavoriteService" type="Bll.FavoriteBll, Bll" singleton="false" >
+  </object>
+  <object name="OrderstService" type="Bll.OrderBll, Bll" singleton="false" >
+  </object>
+  <object name="OrderDetailService" type="Bll.OrderDetailBll, Bll" singleton="false" >
+  </object>
+  <object name="RemarkService" type="Bll.RemarkBll, Bll" singleton="false" >
+  </object>
+</objects> 

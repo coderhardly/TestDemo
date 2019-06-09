@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="CountrySideHappyModelStoreContainer" CdmEntityContainer="CountrySideHappyEntities2">
+    <EntitySetMapping Name="Carts">
+      <EntityTypeMapping TypeName="CountrySideHappyModel.Carts">
+        <MappingFragment StoreEntitySet="Carts">
+          <ScalarProperty Name="IsChecked" ColumnName="IsChecked" />
+          <ScalarProperty Name="cartId" ColumnName="cartId" />
+          <ScalarProperty Name="pId" ColumnName="pId" />
+          <ScalarProperty Name="pcount" ColumnName="pcount" />
+          <ScalarProperty Name="ofUser" ColumnName="ofUser" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Categories">
+      <EntityTypeMapping TypeName="CountrySideHappyModel.Categories">
+        <MappingFragment StoreEntitySet="Categories">
+          <ScalarProperty Name="categoryId" ColumnName="categoryId" />
+          <ScalarProperty Name="cname" ColumnName="cname" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MyFavorite">
+      <EntityTypeMapping TypeName="CountrySideHappyModel.MyFavorite">
+        <MappingFragment StoreEntitySet="MyFavorite">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="productId" ColumnName="productId" />
+          <ScalarProperty Name="uid" ColumnName="uid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OrderDetail">
+      <EntityTypeMapping TypeName="CountrySideHappyModel.OrderDetail">
+        <MappingFragment StoreEntitySet="OrderDetail">
+          <ScalarProperty Name="pUrl" ColumnName="pUrl" />
+          <ScalarProperty Name="OrderDetail_Id" ColumnName="OrderDetail_Id" />
+          <ScalarProperty Name="Pid" ColumnName="Pid" />
+          <ScalarProperty Name="p_price" ColumnName="p_price" />
+          <ScalarProperty Name="pname" ColumnName="pname" />
+          <ScalarProperty Name="pnum" ColumnName="pnum" />
+          <ScalarProperty Name="subtotal" ColumnName="subtotal" />
+          <ScalarProperty Name="order_no" ColumnName="order_no" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Orders">
+      <EntityTypeMapping TypeName="CountrySideHappyModel.Orders">
+        <MappingFragment StoreEntitySet="Orders">
+          <ScalarProperty Name="orderId" ColumnName="orderId" />
+          <ScalarProperty Name="orderAccount" ColumnName="orderAccount" />
+          <ScalarProperty Name="userId" ColumnName="userId" />
+          <ScalarProperty Name="orderState" ColumnName="orderState" />
+          <ScalarProperty Name="adress" ColumnName="adress" />
+          <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+          <ScalarProperty Name="userPhone" ColumnName="userPhone" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Praise">
+      <EntityTypeMapping TypeName="CountrySideHappyModel.Praise">
+        <MappingFragment StoreEntitySet="Praise">
+          <ScalarProperty Name="Praise_id" ColumnName="Praise_id" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="RemarkId" ColumnName="RemarkId" />
+          <ScalarProperty Name="Rstatus" ColumnName="Rstatus" />
+          <ScalarProperty Name="Rnum" ColumnName="Rnum" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Products">
+      <EntityTypeMapping TypeName="CountrySideHappyModel.Products">
+        <MappingFragment StoreEntitySet="Products">
+          <ScalarProperty Name="productId" ColumnName="productId" />
+          <ScalarProperty Name="pname" ColumnName="pname" />
+          <ScalarProperty Name="price" ColumnName="price" />
+          <ScalarProperty Name="origin" ColumnName="origin" />
+          <ScalarProperty Name="pUrl" ColumnName="pUrl" />
+          <ScalarProperty Name="pcategoryId" ColumnName="pcategoryId" />
+          <ScalarProperty Name="Descript" ColumnName="Descript" />
+          <ScalarProperty Name="Phot" ColumnName="Phot" />
+          <ScalarProperty Name="PstoreCount" ColumnName="PstoreCount" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Remark">
+      <EntityTypeMapping TypeName="CountrySideHappyModel.Remark">
+        <MappingFragment StoreEntitySet="Remark">
+          <ScalarProperty Name="remarkId" ColumnName="remarkId" />
+          <ScalarProperty Name="remTxt" ColumnName="remTxt" />
+          <ScalarProperty Name="remTime" ColumnName="remTime" />
+          <ScalarProperty Name="userId1" ColumnName="userId1" />
+          <ScalarProperty Name="userId2" ColumnName="userId2" />
+          <ScalarProperty Name="productId" ColumnName="productId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="CountrySideHappyModel.Users">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="userId" ColumnName="userId" />
+          <ScalarProperty Name="uName" ColumnName="uName" />
+          <ScalarProperty Name="upassword" ColumnName="upassword" />
+          <ScalarProperty Name="usex" ColumnName="usex" />
+          <ScalarProperty Name="telphone" ColumnName="telphone" />
+          <ScalarProperty Name="umail" ColumnName="umail" />
+          <ScalarProperty Name="uphoto" ColumnName="uphoto" />
+          <ScalarProperty Name="roles" ColumnName="roles" />
+          <ScalarProperty Name="lock" ColumnName="lock" />
+          <ScalarProperty Name="createTime" ColumnName="createTime" />
+          <ScalarProperty Name="Hot" ColumnName="Hot" />
+          <ScalarProperty Name="Addressinfo" ColumnName="Addressinfo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Message">
+      <EntityTypeMapping TypeName="CountrySideHappyModel.Message">
+        <MappingFragment StoreEntitySet="Message">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="SendId" ColumnName="SendId" />
+          <ScalarProperty Name="ReceiveId" ColumnName="ReceiveId" />
+          <ScalarProperty Name="MesTxt" ColumnName="MesTxt" />
+          <ScalarProperty Name="IsRead" ColumnName="IsRead" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="Usp_ComPleteOrder" FunctionName="CountrySideHappyModel.Store.Usp_ComPleteOrder" />
+    <FunctionImportMapping FunctionImportName="Usp_ComPleteOrder1" FunctionName="CountrySideHappyModel.Store.Usp_ComPleteOrder1" />
+  </EntityContainerMapping>
+</Mapping>

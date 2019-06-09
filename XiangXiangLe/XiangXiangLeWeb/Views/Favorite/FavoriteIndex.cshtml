@@ -1,0 +1,28 @@
+﻿@model IEnumerable<Model.ViewModel.FavoriteViewModel>
+@{
+    ViewBag.Title = "收藏列表";
+    Layout = null;
+}
+
+<h2>FavoriteIndex</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>商品图片</th>
+            <th>商品名称</th>
+            <th>价格</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var m in Model)
+        {
+            <tr class="distr">
+                <td> <img src="~/Content/ProductImages/@m.PUrl" style="width:50px;height:50px;" /></td>
+                <td>@m.Pname</td>
+                    <td class="price">@m.Price</td>
+                   
+                </tr>}
+    </tbody>
+</table>

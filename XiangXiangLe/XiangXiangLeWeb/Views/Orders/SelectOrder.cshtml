@@ -1,0 +1,65 @@
+﻿@*@model IEnumerable<Model.Orders>*@
+@model PagedList.IPagedList<Model.Orders>
+@using PagedList.Mvc
+
+@{
+    Layout = null;
+}
+<style type="text/css">
+    .link {
+        color: dodgerblue
+    }
+
+    .img {
+        width: 80%;
+        height: 10%;
+    }
+
+    .div {
+        position: relative;
+        border-color: royalblue
+    }
+</style>
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+
+
+
+
+@foreach (var item in Model.ToList())
+{
+
+
+    <div class="container " style="margin-top:50px;">
+        <h5 class="text-right  text-danger"><span>@item.CreateTime</span><br>交易成功</h5>
+        @foreach (var item1 in item.OrderDetail)
+
+        {
+            <div class="row form-group">
+                <div class="col-md-2 center-block"><a href="@Url.Action("OrderDetail","Orders",new { id=item1.Pid})"><span style="">@item1.pname</span></a></div>
+                <div class="col-md-3 ">  <img class="img-rounded img-responsive" style="height:50px" src="~/Content/ProductImages/@item1.pUrl" /></div>
+                <div class="col-md-3 center-block">@item1.p_price <span>x</span><span>@item1.pnum</span></div>
+            </div>
+        }
+        <div class="row "><p class="text-right text-danger"><span class="font">合计</span><span>@item.orderAccount</span></p> </div>
+        <div class="row "><p style="right:50px;position:absolute"><button class="btn btn-primary">申请开票</button><button class="btn btn-primary">查看物流</button></p></div>
+    </div>
+
+}
+每页 @Model.PageSize 条记录，共 @Model.PageCount 页，当前第 @Model.PageNumber 页
+@Html.PagedListPager(Model, pageIndex => Url.Action("SelectOrder", new { pageIndex }))
+@*@Html.Pager(Model, new PagerOptions
+    {
+        PageIndexParameterName = "id",
+        ShowPageIndexBox = true,
+        FirstPageText = "首页",
+        PrevPageText = "上一页",
+        NextPageText = "下一页",
+        LastPageText = "末页",
+        PageIndexBoxType = PageIndexBoxType.TextBox,
+        PageIndexBoxWrapperFormatString = "请输入页数{0}",
+        GoButtonText = "转到"
+    })*@
+@*<br />*@
+
+

@@ -1,0 +1,51 @@
+﻿<head>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <script src="~/ueditor/ueditor.all.js"></script>
+    <script src="~/ueditor/ueditor.all.min.js"></script>
+    <script src="~/ueditor/ueditor.config.js"></script>
+    <script src="~/ueditor/ueditor.parse.js"></script>
+    <script src="~/ueditor/ueditor.parse.min.js"></script>
+    <link href="~/ueditor/themes/default/css/ueditor.css" rel="stylesheet" />
+    <link href="~/ueditor/themes/default/css/ueditor.min.css" rel="stylesheet" />
+</head>
+<body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+
+        <div class="container">
+            <!--小屏幕导航按钮和logo-->
+            <div class="navbar-header">
+                <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="index.html" class="navbar-brand">乡乡乐</a>
+                <span>欢迎你 @Session["userId"]</span>
+            </div>
+            <!--小屏幕导航按钮和logo-->
+            <!--导航-->
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#home">首页</a></li>
+                    <li><a href="#floot">新鲜水果</a></li>
+                    <li><a href="#floor">苗木花卉</a></li>
+                    <li><a href="#course">粮油米面</a></li>
+
+                    <li><a href="#contact">联系我们</a></li>
+                </ul>
+            </div>
+            <!--导航-->
+
+        </div>
+    </nav>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        
+    </div>
+    
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>

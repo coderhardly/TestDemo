@@ -1,0 +1,269 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - 我的 ASP.NET 应用程序</title>
+
+    <link href="~/Content/Layoutcss/animate.css" rel="stylesheet" />
+
+    <link href="~/Content/Layoutcss/bootstrap-maizi.css" rel="stylesheet" />
+ 
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        #scroll {
+            width: 100%;
+            height: 300px;
+            background-color: white;
+            position: relative;
+            border-bottom: 1px solid gray;
+        }
+
+            /*这里是给整个大的ＤＩＶ设定属性．*/
+            #scroll ul {
+                height: 300px;
+                list-style: none;
+            }
+
+                /*ＤＩＶ下的ＵＬ属性*/
+                #scroll ul li {
+                    width: 100%;
+                    height: 300px;
+                    margin: 0px;
+                    padding: 0px;
+                    overflow: hidden;
+                    display: none;
+                    z-index: 1;
+                }
+
+                    #scroll ul li img {
+                        height: 500px;
+                        width: 100%;
+                    }
+
+        /*ＤＩＶ下的ＵＬ下的ＬＩ属性．注意：display:none;因为要将所有的ｌｉ隐藏了先．当点击的时候在显示出来．*/
+        .left {
+            position: absolute;
+            bottom: 50%;
+            left: 5%;
+            /*width: 80px;*/
+            /*height: 20px;*/
+            /*line-height: 20px;
+        text-align: center;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;*/
+        }
+
+        /*//上一张按钮的属性．注意一个绝对定位．*/
+        .right {
+            position: absolute;
+            bottom: 50%;
+            right: 5%;
+            /*width: 80px;
+        height: 20px;*/
+            /*line-height: 20px;
+        text-align: center;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;*/
+        }
+
+        /*//下一张按钮的属性．注意一个绝对定位．*/
+        .left:hover {
+            background: yellow;
+            /*border-radius: 10px;*/
+        }
+
+        .right:hover {
+            background: yellow;
+            /*border-radius: 10px;*/
+        }
+
+        .button {
+            height: 20px;
+            position: absolute;
+            right: 50%;
+            bottom: 20px;
+            z-index: 3;
+            display: inline-block; /*行内块级元素*/
+        }
+
+            .button li {
+                list-style-type: none;
+                width: 20px;
+                height: 10px;
+                float: left;
+                margin: 0px 5px;
+            }
+
+                .button li a {
+                    text-decoration: none;
+                    font-size: 30px;
+                    color: #787c82; /*未选中状态颜色*/
+                }
+
+                .button li .hover {
+                    color: white; /*设置选中状态为白色*/
+                }
+
+        .userPic {
+            width: 50px;
+            margin-top: 5px;
+            border-radius: 30px;
+            height: 50px;
+        }
+        /*//以上两个hover是鼠标经过的效果．*/
+    </style>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+   
+    <nav class="navbar navbar-default navbar-fixed-top">
+
+        <div class="container">
+            <!--小屏幕导航按钮和logo-->
+            <div class="navbar-header">
+                <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="index.html" class="navbar-brand">乡乡乐</a>
+                @if (Session["userId"] != null)
+        {
+                <span class="navbar-text">欢迎你 @Session["userId"]</span>
+            <a href="@Url.Action("PersonIndex","PersonCenter")">
+                <img class="userPic" src="@Session["uphoto"]"/>
+            </a>
+}
+else
+{
+        <a style="line-height:60px;" href="@Url.Action("Login","Register",null)">登录</a>
+        <a style="line-height: 60px;" href="@Url.Action("Register","Register",null)">注册</a>
+
+}
+
+            </div>
+            <form class="navbar-form navbar-left" role="search">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="输入商品名称">
+                </div>
+                <button type="submit" class="btn btn-default">搜索</button>
+            </form>
+            <!--小屏幕导航按钮和logo-->
+            <!--导航-->
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#home">首页</a></li>
+                    <li><a href="#floot">新鲜水果</a></li>
+                    <li><a href="#floor">苗木花卉</a></li>
+                    <li><a href="#course">粮油米面</a></li>
+
+                    <li><a href="#contact">联系我们</a></li>
+                </ul>
+            </div>
+            <!--导航-->
+
+        </div>
+    </nav>
+    <section>
+        <div id="scroll">
+            @*<p class="subl">上一张<p />
+            <p class="subr">下一张<p />*@
+            <a class="left" href="#slidershow" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </a>
+            <a class="right" href="#slidershow" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+            </a>
+            <ol class="button">
+                <li><a class="hover" href="javascript:void(0);">●</a></li>
+                <li><a href="javascript:void(0);">●</a></li>
+                <li><a href="javascript:void(0);">●</a></li>
+                <li><a href="javascript:void(0);">●</a></li>
+            </ol>
+            <ul>
+                <li style="background:red;display:block;"><img src="~/Content/lunbo/lunbo3.jpg" /></li>
+                @*//上面的ｌｉ要设定为显示，因为是第一张图片．*@
+                <li style="background:green;"><img src="~/Content/lunbo/lunbo9.jpg" /></li>
+                <li style="background:gray;"><img src="~/Content/lunbo/lunbo4.jpg" /></li>
+                <li style="background:orange;"><img src="~/Content/lunbo/lunbo5.jpg" /></li>
+            </ul>
+        </div>
+        <div class="container body-content">
+            @RenderBody()
+            <hr />
+            <footer style="background-color:#4a4a4c;margin-top:-30px;">
+                <p>&copy; @DateTime.Now.Year - 乡乡乐</p>
+                <p>版权所有&&江西师范大学软件学院</p>
+
+            </footer>
+        </div>
+    </section>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    <script type="text/javascript">
+    /*轮播*/
+    $(function () {
+        var i = 0;
+        var _index = 0;
+        var len = $("#scroll ul li").length;
+        //alert(len);
+        $(".left").click(function () {
+            clearInterval(timeplay);
+            if (i == len) {
+                i =-1
+            }
+            i++;
+            _index = i;
+            $("ol.button li .hover").removeClass('hover');
+            $("ol.button li").eq(_index).find('a').addClass('hover');
+            $("#scroll ul li").eq(i).fadeIn().siblings().hide();
+            autoplay();
+        });
+        //到这里分开！上面的是上一张点击的效果代码，下面的是下一张点击的效果代码．
+        $(".right").click(function () {//获取类名的点击事件．
+            clearInterval(timeplay);
+            if (i == 0) {
+                i = len + 1;
+            }
+            i--;
+            _index = i;
+            $("ol.button li .hover").removeClass('hover');
+            $("ol.button li").eq(_index).find('a').addClass('hover');
+            $("#scroll ul li").eq(i).fadeIn().siblings().hide();
+            autoplay();
+        });
+        $("#scroll ol li").click(function () {
+            _index = $(this).index();
+            $("ol.button li .hover").removeClass('hover');
+            $(this).find('a').addClass('hover');
+            $("#scroll ul li").eq(_index).fadeIn().siblings().hide();
+        })
+        //自动播放
+        function autoplay() {
+            timeplay = setInterval(function () {
+                i++;
+                _index = i;
+                if (i <= len) {
+                    $("ol.button li .hover").removeClass('hover');
+                    $("ol.button li").eq(_index).find('a').addClass('hover');
+                    $("#scroll ul li").eq(i).fadeIn().siblings().hide();
+                }
+                else {
+                    i = -1;
+                }
+            }, 1500)
+        }
+        autoplay();
+        });
+       
+    /*轮播*/
+    </script>
+</body>
+</html>

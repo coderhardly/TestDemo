@@ -1,0 +1,303 @@
+﻿
+
+@using System.Web.Script.Serialization
+@model  Model.ViewModel.ProductRemarkView
+@{
+    /**/
+
+
+    Layout = "~/Views/Shared/Layout1.cshtml";
+    
+
+}
+<style type="text/css">
+    div{margin-top:5px;}
+    .subbutton {
+        display: inline-block;
+        position: relative;
+        margin: 5px;
+        padding: 0 20px;
+        text-align: center;
+        text-decoration: none;
+        font: bold 12px/25px Arial, sans-serif;
+        height: 40px;
+        color: white;
+        background-color: #b14141;
+        text-shadow: 1px 1px 1px rgba(255,255,255, .22);
+        -webkit-border-radius: 30px;
+        -moz-border-radius: 30px;
+        border-radius: 30px;
+    }
+    h3 {
+        color: #ef476b
+    }
+    .jqzoom {
+        border: 1px solid black;
+        float: left;
+        position: relative;
+        padding: 0px;
+        cursor: pointer;
+    }
+        .jqzoom img {
+            float: left;
+        }
+
+    div.zoomdiv {
+        z-index: 100;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 200px;
+        height: 200px;
+        background: #ffffff;
+        border: 1px solid #CCCCCC;
+        display: none;
+        text-align: center;
+        overflow: hidden;
+    }
+
+    div.jqZoomPup {
+        z-index: 10;
+        visibility: hidden;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 50px;
+        height: 50px;
+        border: 1px solid #aaa;
+        background: #ffffff url(../images/zoom.gif) 50% top no-repeat;
+        ;
+        opacity: 0.5;
+        -moz-opacity: 0.5;
+        -khtml-opacity: 0.5;
+        filter: alpha(Opacity=50);
+    }
+</style>
+<link href="/Content/bootstrap.css" rel="stylesheet" />
+@*<script src="~/Content/ueditor/ueditor.config.js"></script>
+<script src="~/Content/ueditor/ueditor.all.min.js"></script>
+<script src="~/Scripts/jquery.jqzoom.js"></script>
+<link href="~/Content/ueditor/themes/iframe.css" rel="stylesheet" />
+<script src="~/Scripts/use_jqzoom.js"></script>
+<script src="~/Content/ueditor/lang/zh-cn/zh-cn.js"></script*@
+<section>
+    <div class="container">
+        @Html.Partial("RightLogo")
+        <div class="row">
+            <div class="col-md-3">
+                <div style="height:300px;width:100%;margin:0 auto;overflow:hidden">
+                    <a href="~/Content/ProductImages/@Model.products.pUrl" class="jqzoom" rel="gal1" title="@Model.products.pname" id="img1">
+                        <img src="~/Content/ProductImages/@Model.products.pUrl" />
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-7" style="margin-top:70px">
+                <input id="PId" name="PId" type="hidden" value="@Model.products.productId" />
+                <h3 class="h3">@Model.products.pname</h3>
+                <div style="width: 100%; background-color: #f6f5f5;  ">
+                    <dl>
+                        <dt>价格</dt>
+                        <dd style="color: #fc6164;font-size:20px;"><span id="price">@Model.products.price</span>￥</dd>
+                        <dt>描述</dt>
+                        <dd>@Model.products.Descript</dd>
+                        <dt>发货时间</dt>
+                        <dd style="color: #fc6164;">付款五天内</dd>
+                        <dt>存量</dt>
+                        <dd>@Model.products.PstoreCount</dd>
+
+                    </dl>
+                </div>
+                <div>
+                    <dl>
+                        <dt>数量</dt>
+                        <dd>
+                            <input id="min" name="" type="button" value="-">
+                            <input id="num" name="num" type="text" value="1" readonly="readonly" style="width:20px;">
+                            <input id="add" name="" type="button" value="+">
+                        </dd>
+                        <dd id="total" style="float: right; color: #fc6164; font-size: 30px;">0</dd>
+                        <dt style="float:right">总价</dt>
+
+                    </dl>
+
+                    <div style="margin-right:10px; margin-bottom:10px; padding:10px;">
+                        @if (Session["userId"] != null)
+    {
+        if (@Model.myFavorite.Count() ==0)
+        {
+                    <input id="addFavorite" class="subbutton" type="button" value="添加收藏" />
+}
+else
+{
+                    <input id="addFavorite" class="subbutton" type="button" value="已收藏" />
+}
+
+                    <input id="buy" class="subbutton" type="button" value="立即购买" />
+                    <input id="addCart" class="subbutton" type="button" value="加入购物车" />
+}
+else
+{
+                    <input id="addFavorite1" class="subbutton" type="button" value="添加收藏" />
+                    <input id="buy" class="subbutton" type="button" value="立即购买" />
+                    <input id="a" class="subbutton" type="button" value="加入购物车" />
+
+}
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <h2 class="h2">评论列表</h2>
+            @foreach (var item in Model.remarks)
+            {
+            <div style="border-bottom:1px solid #c1c1c1">
+                <div style="margin-left:5px;margin-left:5px;">用户:<span style="color:#3177a0">@item.userId1</span>&nbsp;&nbsp;<span>@item.remTime</span></div> 
+               <div style="background-color:#f7f7f9"> <p class="text-capitalize text-left" style="color:#633c3b">@item.remTxt</p></div>
+                <div style="text-align:right"><a>支持</a><span>(0)</span> <a>反对</a>(0)</div>
+
+            </div>
+             }
+        </div>
+        @*<div class="row">
+            <div class="col-md-10" style="height:200px">
+                @using (Html.BeginForm("Index", "UEditor", new { pid = Model.products.productId }, FormMethod.Post, null))
+    {
+            <textarea id="editor" name="editor"></textarea>
+              if (Session["userId"] == null){
+                <input id="remarkLogin" type="button" value="提交" style="float:right" />
+                  }
+              else
+             {
+            <input type="submit" value="提交" class="btn-success btn-lg" style="float:right" />
+               }
+
+}
+              
+            </div>
+        </div>*@
+    </div>
+</section>
+    @*<script type="text/javascript">
+        var editor = new baidu.editor.ui.Editor({
+            UEDITOR_HOME_URL: '/Content/ueditor/',//配置编辑器路径
+            iframeCssUrl: '/Content / ueditor / themes / iframe.css',//样式路径
+            initialContent: '',//初始化编辑器内容
+            autoHeightEnabled: false,//高度自动增长
+            minFrameHeight:100,//最小高度
+            autoFloatEnabled: true,
+            initialFrameWidth:1000,
+            initialFrameHeight:100,
+        });
+        editor.render('editor');
+    </script>*@
+<script src="~/Scripts/jquery-1.7.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        setTotal();
+        var num = $("#num").val();
+        var addCart = $("#addCart")
+        addCart.click(function () {
+
+            var num = $("#num").val();
+
+            var id = $("#PId").val();
+            $.ajax({
+                url: "/Carts/AddProduct",
+                type: "post",
+                data: { pNum: num, pId: id },
+                success: function (data) {
+                    if (data.flag == true) {
+                        $.getJSON("/Carts/GetCount", function (data) {
+                            var cnum = data.number;
+                            $("#shopCart #cartNum").text(cnum);
+                            //debugger;
+                        })
+                        alert("添加成功");
+                    }
+                    else {
+                        alert("添加失败");
+                    }
+                },
+
+
+            });
+        });
+        $("#min").click(function () {
+            if (num > 0) {
+                num--;
+            }
+
+            $("#num").val(num);
+            setTotal();
+        });
+        $("#add").click(function () {
+
+            if (num < 20) {
+                num++;
+            }
+            else {
+                alert('该商品限购哦');
+            }
+
+            $("#num").val(num);
+            setTotal();
+        });
+        $("#a").click(function () {
+            alert('请登录');
+            window.location.href = "/Register/Login"
+        });
+        $("#remarkLogin").click(function () {
+            alert("该操作需登录")
+                   
+        });
+        $("#addFavorite").click(function () {
+            var id = $("#PId").val();
+            var value = $("#addFavorite").val().trim();
+            if (value == "添加收藏") {
+                $.ajax({
+                    url: "/Favorite/AddFavorite",
+                    type: "post",
+                    data: { pId: id },
+                    success: function (data) {
+                        if (data.flag == true) {
+                            $("#addFavorite").val("取消收藏");
+                            alert("收藏成功");
+                        }
+                        else {
+                            alert("收藏失败");
+                        }
+                    },
+                });
+            }
+            else {
+                $.ajax({
+                    url: "/Favorite/DelFavorite",
+                    type: "post",
+                    data: { pId: id },
+                    success: function (data) {
+                        if (data.flag == true) {
+                            $("#addFavorite").val("添加收藏");
+                            alert("取消收藏成功");
+                        }
+                        else {
+                            alert("取消收藏失败");
+                        }
+                    },
+                });
+            }
+           
+        });
+        $("#addFavorite1").click(function () {
+            alert('请登录');
+            window.location.href = "/Register/Login"
+        });
+    })
+    function setTotal() {
+        var price = parseInt($("#price").text())
+        var num = parseInt($("#num").val());
+        var total = price * num;
+        $("#total").text(total);
+    }
+</script>

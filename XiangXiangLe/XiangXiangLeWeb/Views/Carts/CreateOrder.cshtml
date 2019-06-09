@@ -1,0 +1,220 @@
+﻿@model Model.ViewModel.CreateOrderView
+@{
+
+    Layout = null;
+
+}
+<style>
+    .formPosition {
+        width: 80%;
+        height: 100%;
+        position: absolute;
+        top: 10%;
+        left: 10%;
+        background-color: #eeeeee;
+    }
+    hr {
+        width: 80%;
+        background-color: red;
+        height:1px;
+        border:none;
+    }
+    input{border-color:blanchedalmond}
+    h2{color:red}
+</style>
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+
+<form class="form-horizontal">
+    <div class="container">
+        <h2>填写收货人信息</h2>
+        <div class="row form-group">
+            <label class="control-label col-lg-1" for="name">收货人姓名</label>
+            <div class="col-lg-5 col-md-6">
+                <span id="CusName">@Model.UsersInfo.uName</span>
+
+            </div>
+        </div>
+        <div class="row form-group">
+            <label class="control-label col-lg-1" for="name">收货人地址</label>
+
+            <div class="col-lg-5 col-md-6">
+                <span id="CusAdress">@Model.UsersInfo.Addressinfo</span>
+              
+            </div>
+        </div>
+        <div class="row form-group">
+            <label class="control-label col-lg-1" for="name">收货人电话</label>
+            <span id="CusTel">@Model.UsersInfo.telphone</span>
+           
+        </div>
+        <p>
+            <button id="updateAdress" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editAdress">编辑地址</button>
+        </p>
+        <div class="modal fade" id="editAdress" tabindex="-1" role="dialog" aria-labelledby="my" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">编辑收获人地址</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="input-group input-group-lg">
+                            <label>姓名</label>
+                            <input id="uName" type="text" class="form-control" value="1">
+                           
+                        </div>
+                        <br />
+
+
+                        <div class="input-group input-group-lg">
+                            <label>地址</label>
+                            <input id="uAdress" type="text" class="form-control" value="" placeholder="Twitterhandle">
+                        </div>
+
+                        <div>
+                            <label>电话</label>
+                            <input id="uTel" type="text" class="form-control" value="" placeholder="Twitterhandle">
+                        </div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button id="update" type="button" class="btn btn-primary">提交更改</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
+        </div>
+        <hr />
+        <h2>确认商品信息</h2>
+        <table class="table table-bordered table-hover" id="productList">
+            <thead>
+                <tr>
+                    <th>商品图片</th>
+                    <th>商品名称</th>
+                    <th>数量</th>
+                    <th>小计</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var m in Model.productsList)
+            {
+                <tr class="distr">
+                    <td> <img src="@m.PUrl" style="width:50px;height:50px;" /></td>
+                    <td>@m.Pname</td>
+
+                    <td class="pnum">
+                        @m.Pcount
+                    </td>
+
+                    @{ var price = m.Price;
+                    var count = m.Pcount;
+                    var total = price * count;
+                    }
+                    <td class="price">@total<span style="color:red">￥</span></td>
+                    <td style="display:none">@m.ProductId</td>
+                    <td style="display:none">@m.Price</td>
+                </tr>
+
+        }
+            </tbody>
+        </table>
+        <p style="color:red;font-size:large">总计<span id="totalPrice" name="totalPrice"></span>￥</p>
+        <input type="submit" value="提交订单" class="btn btn-primary btn-sm" style="float:right;margin-right:30px;" />
+    </div>
+</form>                     
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/jquery.cookie.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script type="text/javascript">
+
+    $(function () {         
+        SetTotal();
+        $("form").submit(function () {
+            var arry = [];//用来存储表格中的商品信息
+            $("#productList tr:gt(0)").each(function () {
+                var cPurl = $(this).find('td:nth(0)').find('img').attr("src");
+
+                var cpname = $(this).find('td:nth(1)').text();
+                var cpcount = $(this).find('td:nth(2)').text();
+                var cpSubtotal = $(this).find('td:nth(3)').text();
+                var cpId = $(this).find('td:nth(4)').text();
+                var cPrice = $(this).find('td:nth(5)').text();
+
+                arry.push({ Pname: cpname, Pcount: cpcount, Psubtotal: cpSubtotal, ProductId: cpId, PUrl: cPurl, Price: cPrice })
+            })
+            console.log(arry);
+            var cusName = $("#CusName").val();
+            var cusTel = $("#CusTel").val();
+            var cusAdress = $("#CusAdress").val().replace('\n','').trim();
+            var totalPrice = $("#totalPrice").text();
+            $.ajax({
+                url: "/Orders/CompleteOrder",
+                type: "post",
+                data: {CusName:cusName,CusTel:cusTel,CusAdress:cusAdress,TotalPrice:totalPrice},
+                success: function (data) {
+                    if (data.flag1 = true) {
+                        window.location = "/Orders/SelectOrder";
+                       
+                    }
+                    else {
+                        alert("添加失败");
+                    }
+                },
+
+
+            });
+           
+          
+          
+        })
+        $("#updateAdress").click(function () {
+            alert("触发");
+            SetModalValue();
+        })
+        $("#update").click(function () {
+            var adress = $("#uAdress").val();
+            var name= $("#uName").val();
+            var tel = $("#uTel").val();
+            $.ajax({
+                url: "/Carts/UpdateAdress",
+                type: "post",
+                data: {uAdress:adress,uName:name,uTel:tel},
+                success: function (data) {
+                    if (data.flag == true) {
+                        console.log("success");
+                        window.location = "/Carts/CreateOrder"
+                    }
+                    else {
+                        alert("亲，因为未知的元素，程序出错");
+                    }
+                }
+
+            }
+            )
+        });
+
+       
+    })
+
+    function SetTotal() {
+        var allTotalPrice = 0;
+
+        $(".price").each(function () {
+            console.log($(this).text());
+            allTotalPrice = allTotalPrice + parseInt($(this).text())
+        })
+        $("#totalPrice").text(allTotalPrice);
+    }
+    function SetModalValue() {
+        var name = $("#CusName").text();
+        var adress = $("#CusAdress").text();
+        var tel = $("#CusTel").text();
+        $("#uAdress").val(adress);
+        $("#uName").val(name);
+        $("#uTel").val(tel);
+        $("#editAdress").modal('show');
+   
+    }
+
+
+</script>

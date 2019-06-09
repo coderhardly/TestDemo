@@ -1,0 +1,129 @@
+﻿@model  Model.Users
+@{
+    ViewBag.Title = "Register";
+    Layout = null;
+}
+<link href="~/Content/Register.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+@*<script type="text/javascript">
+        $(function () {
+            $("#regisform").validate({
+                rules: {
+                    txtId: "required",
+                    password: {
+                        required: true,
+                        minlength: 5,
+                        maxlength: 12,
+
+
+                    },
+                    checkPassword:
+                        {
+                            required: true,
+                            equalTo:"#password",
+                        },
+                    txtphone:"required"
+
+                }
+                ,
+                //messages:
+                //{
+                //        txtId: "账号不为空",
+                //        password: {
+                //            required:"密码不为空",
+                //            minlength: "最小长度为5",
+                //            maxlength: "最大长度为12",
+
+
+                //        },
+                //        checkPassword:
+                //            {
+                //                required: "填写确认密码",
+                //                equalTo: "密码不一致",
+                //            },
+                //        txtphone: "手机号是必须的"
+                //    }
+            })
+        })
+    </script>*@
+<script type="text/javascript">
+ function reloadcode() {
+            var verify = document.getElementById('validimg');
+            verify.setAttribute('src', '@Url.Content("/YZM/GetYZM?")' + Math.random());
+        }
+</script>
+
+<body>
+    @using (Html.BeginForm("Register", "Register", FormMethod.Post, new { id = "regisform" }))
+    {
+
+        <div id="header"><h1>乡乡乐欢迎你</h1></div>
+        <div id="picture">
+            <div id="register">
+                <div id="rth">用户注册</div><hr />
+                <div class="rtd">
+                    <div class="rtd-left">
+                        <img src="~/Content/Image/Register/用户.PNG" />
+                    </div>
+                    <div class="rtd-right">
+                        @*<input type="text" id="txtId" name="txtId" />*@
+                        @Html.TextBoxFor(m => m.userId, new { id = "txtId", placeholder = "请输入5-10位的数字账号" })
+                        @Html.ValidationMessageFor(m => m.userId)
+                    </div>
+                </div>
+                <div class="rtd">
+                    <div class="rtd-left">
+                        <img src="~/Content/Image/Register/密码.PNG" />
+                        @*@Html.LabelFor(m => m.upassword);*@
+                    </div>
+                    <div class="rtd-right">
+                        @*<input type="text" id="txtPassword" name="txtPassword" />*@
+                        @Html.PasswordFor(m => m.upassword, new { id = "password", placeholder = "请输入密码" })
+                        @Html.ValidationMessageFor(m => m.upassword)
+
+                    </div>
+                </div>
+
+                <div class="rtd">
+                    <div class="rtd-left">   <img src="~/Content/Image/Register/密码.PNG" /></div>
+                    <div class="rtd-right">
+                        @*<input type="text" id="txtCheckPassword" name="txtCheckPassword" />*@
+                        @Html.PasswordFor(m => m.RePwd, new { id = "checkPassword", placeholder = "请输入密码" })
+                        @Html.ValidationMessageFor(m => m.RePwd)
+                    </div>
+                </div>
+                <div class="rtd">
+                    <div class="rtd-left">
+                        <img src="~/Content/Image/Register/邮箱.PNG" />
+                        @*@Html.LabelFor(m => m.telphone);*@
+                    </div>
+                    <div class="rtd-right">
+                        @*<input type="text" id="txtMail" name="txtMail" />*@
+                        @Html.TextBoxFor(m => m.umail, new { id = "txtPhone", placeholder = "请输入邮箱" })
+                        @Html.ValidationMessageFor(m => m.umail);
+                    </div>
+                </div>
+                <div class="rtd">
+                    <div style="width:60%;float:left;height:30px;">
+                        <input id="txtverifcode" name="txtverifcode" placeholder="验证码" type="text" />
+                    </div>
+                    <div style="width:20%;float:left;height:30px;">
+                        <span> <img id="validimg" src="@Url.Action("GetYZM", "YZM")" onclick="reloadcode()" /></span>
+                    </div>
+                </div>
+                <div class="rtd">
+                    <div style="text-align:right">
+                        <input type="submit" value="注册" style="width:30%;height:30px;" />
+                    </div>
+                    <div style="text-align:right">已有账号？<a href="@Url.Action("Login","Register")">前往登录</a></div>
+                </div>
+            </div>
+        </div>
+        <div id="footer"></div>
+    }
+
+</body>
+

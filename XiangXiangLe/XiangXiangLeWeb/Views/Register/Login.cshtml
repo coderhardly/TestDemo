@@ -1,0 +1,158 @@
+﻿@model Model.Users
+@{
+    ViewBag.Title = "Login";
+    Layout = null;
+}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- CSS -->
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
+<link rel="stylesheet" href="~/Content/form-1/assets/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="~/Content/form-1/assets/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="~/Content/form-1/assets/css/form-elements.css">
+<link rel="stylesheet" href="~/Content/form-1/assets/css/style.css">
+
+<link rel="shortcut icon" href="~/Content/form-1/ assets/ico/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="~/Content/form-1/assets/ico/apple-touch-icon-144-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="~/Content/form-1/assets/ico/apple-touch-icon-114-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="~/Content/form-1/assets/ico/apple-touch-icon-72-precomposed.png">
+<link rel="apple-touch-icon-precomposed" href="~/Content/form-1/assets/ico/apple-touch-icon-57-precomposed.png">
+<script type="text/javascript">
+ function reloadcode() {
+            var verify = document.getElementById('validimg');
+            verify.setAttribute('src', '@Url.Content("/YZM/GetYZM?")' + Math.random());
+        }
+</script>
+<body>
+    <!-- Top content -->
+  
+    <form>
+
+        <div class="top-content" style="background-color:cadetblue">
+
+            <div class="inner-bg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-8 col-sm-offset-2 text">
+                            <h1><strong>乡乡乐</strong></h1>
+
+                            @*<img src="~/Content/Image/lunbo7.jpg" />*@
+                            <div class="description">
+                                <p>
+                                    亲，乡乡乐已经等你好久了
+                                    <a href="#"><strong>买卖农产品</strong></a>尽在乡乡乐 自然健康
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-3 form-box">
+                            <div class="form-top">
+                                <div class="form-top-left">
+                                    <h3>登录我们的网站</h3>
+                                    <p>填写账号和密码</p>
+                                </div>
+                                <div class="form-top-right">
+                                    <i class="fa fa-key"></i>
+                                </div>
+                            </div>
+                            <div class="form-bottom">
+                                <form role="form" action="" method="post" class="login-form">
+                                    <div class="form-group">
+                                        <label class="sr-only" for="form-username">用户名</label>
+                                        @*@Html.TextBoxFor(m => m.userId, new {@class="form-username form-control",id= "form-username", placeholder = "请输入用户名" })*@
+                                        <input type="text" name="form-username" placeholder="请输入用户名" class="form-username form-control" id="form-username" value="@ViewBag.UserName" />
+                                    </div>
+                                    <div class="form-group">
+
+                                        <label class="sr-only" for="form-password"></label>
+                                        @*@Html.PasswordFor(m => m.upassword, new { @class= "form-password form-control", id = "form-password", placeholder = "请输入密码" })*@
+                                        <input type="password" name="form-password" placeholder="请输入密码" class="form-password form-control" id="form-password" value="@ViewBag.PassWord">
+                                    </div>
+                                    <div class="form-group">
+                                        <input id="txtverifcode" name="txtverifcode" placeholder="验证码" type="text" />
+
+
+                                        <span> <img id="validimg" src="@Url.Action("GetYZM", "YZM")" onclick="reloadcode()" /></span>
+
+                                    </div>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input id="single" type="checkbox"> 记住密码
+                                        </label>
+                                    </div>
+
+                                    <button type="submit" class="btn" style="margin-top:10px" onclick="begginLogin()">登录</button>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-3 social-login">
+                            <h3>...用其他账号登录</h3>
+                            <div class="social-login-buttons">
+                                <a class="btn btn-link-1 btn-link-1-facebook" href="#">
+                                    <img src="~/Content/form-1/assets/img/timg (1).jpeg" style="width:40px;height:30px;" />
+                                </a>
+                                <a class="btn btn-link-1 btn-link-1-twitter" href="#">
+
+                                    <img src="~/Content/form-1/assets/img/timg (2).jpeg" style="width:40px;height:30px;" />
+                                </a>
+
+                                <a class="btn btn-link-1 btn-link-1-twitter" href="#">
+
+                                    <img src="~/Content/form-1/assets/img/timg.jpeg" style="width:40px;height:30px;" />
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+    <script src="~/Content/form-1/assets/js/jquery-1.11.1.js"></script>
+    <script type="text/javascript">
+        function begginLogin() {
+            alert("com");
+            alert($("#form-username").val());
+            alert($("#single").prop("checked"));
+            $.ajax(
+                {
+                    url: "/Register/Login",
+                    type: "post",
+                    data: { uName: $("#form-username").val(), uPassword: $("#form-password").val(), ck: $("#single").prop("checked"), txtverifcode: $("#txtverifcode").val() },
+                    success: function (data) {
+                        if (data.result == 1) {
+                            window.location.href = "/Home/Index";
+                        }
+                        else if (data.result = 0) {
+                            window.location.href = "/Manage/Index";
+                        }
+                        else {
+                            alert("账号或密码错误");
+                        }
+
+                    }
+
+                }
+
+            )
+        }
+    </script>
+    <!-- Javascript -->
+
+    @*<script src="~/Content/form-1/assets/bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="~/Content/form-1/assets/js/jquery.backstretch.min.js"></script>
+    <script src="~/Content/form-1/assets/js/scripts.js"></script>*@
+
+    <!--[if lt IE 10]>
+        <script src="assets/js/placeholder.js"></script>
+    <![endif]-->
+
+</body>
+
+
+
+

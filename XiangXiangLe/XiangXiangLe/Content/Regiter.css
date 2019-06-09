@@ -1,0 +1,70 @@
+﻿body {
+    width: 90%;
+    height: 1000px;
+    margin: 0 auto;
+}
+
+#header {
+    background-color: darkgoldenrod;
+    width: 90%;
+    height: 150px;
+    text-align: center;
+    line-height: 100px;
+    font: 700;
+}
+
+#picture {
+    background-image: url('../Image/88.jpg');
+    width: 90%;
+    height: 700px;
+    background-image: url('../Image/Register/4.jpg');
+    background-repeat: no-repeat;
+    background-size: 100%,100%;
+}
+
+#register {
+    width: 250px;
+    height: 450px;
+    right: 20%;
+    top: 35%;
+    position: absolute;
+    background-color: ActiveBorder;
+}
+
+#rth {
+    font-size: large;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: brown;
+    text-align: center;
+}
+
+hr {
+    color: darksalmon
+}
+
+.rtd {
+    height: 30px;
+    width: 100%;
+}
+
+.rtd-left {
+    height: 60px;
+    width: 30%;
+    float: left;
+}
+
+.rtd-right {
+    height: 60px;
+    width: 70%;
+    float: right;
+}
+
+a:hover {
+    color: red;
+}
+
+#footer {
+    height: 150px;
+    width: 90%;
+    background-color: darkgoldenrod;
+}

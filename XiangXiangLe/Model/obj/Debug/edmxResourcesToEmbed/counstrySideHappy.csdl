@@ -1,0 +1,202 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CountrySideHappyModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Carts">
+    <Key>
+      <PropertyRef Name="cartId" />
+    </Key>
+    <Property Name="cartId" Type="Int32" Nullable="false" />
+    <Property Name="pId" Type="Int32" Nullable="false" />
+    <Property Name="userId" Type="Int32" Nullable="false" />
+    <Property Name="pcount" Type="Int32" Nullable="false" />
+    <Property Name="ptotalPrice" Type="Int32" Nullable="false" />
+    <Property Name="dateCreate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Products" Relationship="Self.FK__Carts__pId__1A14E395" FromRole="Carts" ToRole="Products" />
+    <NavigationProperty Name="Users" Relationship="Self.FK__Carts__userId__1B0907CE" FromRole="Carts" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="Categories">
+    <Key>
+      <PropertyRef Name="categoryId" />
+    </Key>
+    <Property Name="categoryId" Type="Int32" Nullable="false" />
+    <Property Name="cname" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Products" Relationship="Self.FK__Products__pcateg__173876EA" FromRole="Categories" ToRole="Products" />
+  </EntityType>
+  <EntityType Name="Orders">
+    <Key>
+      <PropertyRef Name="orderId" />
+    </Key>
+    <Property Name="orderId" Type="Int32" Nullable="false" />
+    <Property Name="orderAccount" Type="Int32" Nullable="false" />
+    <Property Name="pId" Type="Int32" Nullable="false" />
+    <Property Name="userId" Type="Int32" Nullable="false" />
+    <Property Name="orderState" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="adress" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Products" Relationship="Self.FK__Orders__pId__1DE57479" FromRole="Orders" ToRole="Products" />
+    <NavigationProperty Name="Users" Relationship="Self.FK__Orders__userId__1ED998B2" FromRole="Orders" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="Products">
+    <Key>
+      <PropertyRef Name="productId" />
+    </Key>
+    <Property Name="productId" Type="Int32" Nullable="false" />
+    <Property Name="pname" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="price" Type="Int32" Nullable="false" />
+    <Property Name="origin" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="pUrl" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="pcategoryId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Carts" Relationship="Self.FK__Carts__pId__1A14E395" FromRole="Products" ToRole="Carts" />
+    <NavigationProperty Name="Categories" Relationship="Self.FK__Products__pcateg__173876EA" FromRole="Products" ToRole="Categories" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__pId__1DE57479" FromRole="Products" ToRole="Orders" />
+  </EntityType>
+  <EntityType Name="Remark">
+    <Key>
+      <PropertyRef Name="remarkId" />
+    </Key>
+    <Property Name="remarkId" Type="Int32" Nullable="false" />
+    <Property Name="remTxt" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="remTime" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="userId1" Type="Int32" Nullable="false" />
+    <Property Name="userId2" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Users" Relationship="Self.FK__Remark__userId1__22AA2996" FromRole="Remark" ToRole="Users" />
+    <NavigationProperty Name="Users1" Relationship="Self.FK__Remark__userId2__239E4DCF" FromRole="Remark" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="userId" />
+    </Key>
+    <Property Name="userId" Type="Int32" Nullable="false" />
+    <Property Name="uName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="upassword" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="usex" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="telphone" Type="Int32" Nullable="false" />
+    <Property Name="umail" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="uphoto" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="roles" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="lock" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="createTime" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Carts" Relationship="Self.FK__Carts__userId__1B0907CE" FromRole="Users" ToRole="Carts" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__userId__1ED998B2" FromRole="Users" ToRole="Orders" />
+    <NavigationProperty Name="Remark" Relationship="Self.FK__Remark__userId1__22AA2996" FromRole="Users" ToRole="Remark" />
+    <NavigationProperty Name="Remark1" Relationship="Self.FK__Remark__userId2__239E4DCF" FromRole="Users" ToRole="Remark" />
+  </EntityType>
+  <Association Name="FK__Carts__pId__1A14E395">
+    <End Role="Products" Type="Self.Products" Multiplicity="1" />
+    <End Role="Carts" Type="Self.Carts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="productId" />
+      </Principal>
+      <Dependent Role="Carts">
+        <PropertyRef Name="pId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Carts__userId__1B0907CE">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Carts" Type="Self.Carts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="Carts">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Products__pcateg__173876EA">
+    <End Role="Categories" Type="Self.Categories" Multiplicity="1" />
+    <End Role="Products" Type="Self.Products" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categories">
+        <PropertyRef Name="categoryId" />
+      </Principal>
+      <Dependent Role="Products">
+        <PropertyRef Name="pcategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Orders__pId__1DE57479">
+    <End Role="Products" Type="Self.Products" Multiplicity="1" />
+    <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="productId" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="pId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Orders__userId__1ED998B2">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Remark__userId1__22AA2996">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Remark" Type="Self.Remark" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="Remark">
+        <PropertyRef Name="userId1" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Remark__userId2__239E4DCF">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Remark" Type="Self.Remark" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="Remark">
+        <PropertyRef Name="userId2" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="CountrySideHappyEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Carts" EntityType="Self.Carts" />
+    <EntitySet Name="Categories" EntityType="Self.Categories" />
+    <EntitySet Name="Orders" EntityType="Self.Orders" />
+    <EntitySet Name="Products" EntityType="Self.Products" />
+    <EntitySet Name="Remark" EntityType="Self.Remark" />
+    <EntitySet Name="Users" EntityType="Self.Users" />
+    <AssociationSet Name="FK__Carts__pId__1A14E395" Association="Self.FK__Carts__pId__1A14E395">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="Carts" EntitySet="Carts" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Carts__userId__1B0907CE" Association="Self.FK__Carts__userId__1B0907CE">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Carts" EntitySet="Carts" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Products__pcateg__173876EA" Association="Self.FK__Products__pcateg__173876EA">
+      <End Role="Categories" EntitySet="Categories" />
+      <End Role="Products" EntitySet="Products" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Orders__pId__1DE57479" Association="Self.FK__Orders__pId__1DE57479">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Orders__userId__1ED998B2" Association="Self.FK__Orders__userId__1ED998B2">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Remark__userId1__22AA2996" Association="Self.FK__Remark__userId1__22AA2996">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Remark" EntitySet="Remark" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Remark__userId2__239E4DCF" Association="Self.FK__Remark__userId2__239E4DCF">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Remark" EntitySet="Remark" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
